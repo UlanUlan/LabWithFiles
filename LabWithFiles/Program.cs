@@ -11,7 +11,13 @@ namespace LabWithFiles
     {
         static void Main(string[] args)
         {
-            string path = @"C:\Games\Counter-Strike 1.6";
+            //string path = @"C:\Games\Heroes of Might & Magic III - HD Edition";
+
+            string path = "";
+            string path1 = "";
+
+            Console.Write("Укажите путь к папке в которой находятся файлы: ");
+            path = Console.ReadLine();
 
             List<string> AllFormats = new List<string>();
             List<string> FilesWithSimbols = new List<string>();
@@ -34,28 +40,31 @@ namespace LabWithFiles
             List<string> ListFormatov = new List<string>();
             Console.WriteLine();
             string format = " ";
-            //do
-            //{
-            //    Console.Write("С каким форматом будем работать? (Можно выбрать несколько) (Введите Enter для выхода): ");
-            //    format = Console.ReadLine();
-            //    if (AllFormats.Contains(format))
-            //        ListFormatov.Add('.'+format);
-            //}
-            //while (!string.IsNullOrEmpty(format));
+            do
+            {
+                Console.Write("С каким форматом будем работать? (Можно выбрать несколько) (Вводите без точки) (Введите Enter для выхода): ");
+                format = Console.ReadLine();
+                if (AllFormats.Contains(format))
+                    ListFormatov.Add('.' + format);
+            }
+            while (!string.IsNullOrEmpty(format));
 
+            Console.WriteLine();
+            Console.WriteLine("-----------------------------------------------------------");
+            Console.WriteLine();
 
-            //foreach (FileInfo item in dir.GetFiles())
-            //{
-            //    //if (ListFormatov.Contains(item.Extension))
-            //    //{
-            //        Console.Write("{0,-17}{1}", "Полный путь ", "->"); Console.WriteLine(item.DirectoryName);
-            //        Console.Write("{0,-17}{1}", "Размер ", "->"); Console.WriteLine(item.Length);
-            //        Console.Write("{0,-17}{1}", "Имя ", "->"); Console.WriteLine(item.Name);
-            //        //Console.WriteLine(item.FullName);
-            //        Console.Write("{0,-17}{1}", "Дата создания ", "->"); Console.WriteLine(item.CreationTime);
-            //        Console.WriteLine("--------------------------------------------------");
-            //    //}
-            //}
+            foreach (FileInfo item in dir.GetFiles())
+            {
+                //if (ListFormatov.Contains(item.Extension))
+                //{
+                Console.Write("{0,-17}{1}", "Полный путь ", "->"); Console.WriteLine(item.DirectoryName);
+                Console.Write("{0,-17}{1}", "Размер ", "->"); Console.WriteLine(item.Length);
+                Console.Write("{0,-17}{1}", "Имя ", "->"); Console.WriteLine(item.Name);
+                //Console.WriteLine(item.FullName);
+                Console.Write("{0,-17}{1}", "Дата создания ", "->"); Console.WriteLine(item.CreationTime);
+                Console.WriteLine("--------------------------------------------------");
+                //}
+            }
 
             foreach (string item in FilesWithSimbols)
             {
@@ -64,20 +73,24 @@ namespace LabWithFiles
                     if ((!(i >= 48 && i <= 57)) && (!(i >= 65 && i <= 90)) && (!(i >= 97 && i <= 122)))
                         symbols += i;
                 }
-                Console.WriteLine(item);
+                //Console.WriteLine(item);
             }
             foreach (char item in symbols)
             {
                 if (!symbols1.Contains(item))
                     symbols1 += item;
             }
+
+            Console.Write("\n Укажите путь куда будут скопированы, вскоре изменённые, файлы: ");
+            path1 = Console.ReadLine();
+
             Console.Write("В наименованиях присутствовали символы: ");
             foreach (char item in symbols1)
             {
                 Console.Write("<" + item + "> заменить на "); string a = Console.ReadLine();
                 foreach (FileInfo i in dir.GetFiles())
                 {
-                    if(item == 32)
+                    if (item == 32)
                     {
                         foreach (char it in i.Name)
                         {
@@ -85,42 +98,42 @@ namespace LabWithFiles
                                 break;
                         }
                     }
-                    i.Name.Replace(item, a[0]);
-                    i.MoveTo(@"C:\i.Name");
+                    //i.Name.Replace(item, a[0]);
+                    i.MoveTo(path1 + @"\" + i.Name.Replace(item, a[0]));
                 }
             }
         }
-            static bool ContainsSymbol(string s)
+        static bool ContainsSymbol(string s)
+        {
+
+            foreach (char item in s)
             {
-
-                foreach (char item in s)
+                if ((!(item >= 48 && item <= 57)) && (!(item >= 65 && item <= 90)) && (!(item >= 97 && item <= 122)))
                 {
-                    if ((!(item >= 48 && item <= 57)) && (!(item >= 65 && item <= 90)) && (!(item >= 97 && item <= 122)))
-                    {
-                        return true;
-                    }
-                    //int q = 0;
-                    //if(!(item >= 48 && item <= 57))
-                    //{
-                    //    ++q;
-                    //}
-                    //if(!(item >= 65 && item <= 90))
-                    //{
-                    //    ++q;
-                    //}
-                    //if (!(item >= 97 && item <= 122))
-                    //{
-                    //    ++q;
-                    //}
-                    //if (q == 3)
-                    //{
-                    //    return true;
-                    //}
+                    return true;
                 }
-                return false;
+                //int q = 0;
+                //if(!(item >= 48 && item <= 57))
+                //{
+                //    ++q;
+                //}
+                //if(!(item >= 65 && item <= 90))
+                //{
+                //    ++q;
+                //}
+                //if (!(item >= 97 && item <= 122))
+                //{
+                //    ++q;
+                //}
+                //if (q == 3)
+                //{
+                //    return true;
+                //}
             }
-
-
+            return false;
         }
+
 
     }
+
+}
